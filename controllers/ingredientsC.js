@@ -35,7 +35,7 @@ router.get('/:id', async (req, res) => {
 // post new ingredient
 router.post('/new', async (req, res) => {
   try {
-    const d = req.body.drink;
+    const d = req.body.ing;
 
     const reply = await Ingredients.create({
       name: d.name,
