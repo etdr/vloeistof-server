@@ -10,24 +10,24 @@ seq.authenticate().then(
 )
 
 
-let User = seq.import('./models/users');
+let Users = seq.import('./models/users');
 let UserInfo = seq.import('./models/userinfo');
 let Drinks = seq.import('./models/drinks');
 let Ingredients = seq.import('./models/ingredients');
 let Posts = seq.import('./models/posts');
 
 // database associations go here
-User.hasOne(UserInfo);
-UserInfo.belongsTo(User);
+Users.hasOne(UserInfo);
+UserInfo.belongsTo(Users);
 
-User.hasMany(Drinks);
-Drinks.belongsTo(User);
+Users.hasMany(Drinks);
+Drinks.belongsTo(Users);
 
-User.hasMany(Ingredients);
-Ingredients.belongsTo(User);
+Users.hasMany(Ingredients);
+Ingredients.belongsTo(Users);
 
-User.hasMany(Posts);
-Posts.belongsTo(User);
+Users.hasMany(Posts);
+Posts.belongsTo(Users);
 
 
 
