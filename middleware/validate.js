@@ -1,5 +1,5 @@
 const JWT = require('jsonwebtoken');
-let User = require('../db').import('../models/user');
+let Users = require('../db').import('../models/users');
 
 const v = (req, res, next) => {
   if (req.method == 'OPTIONS') {
@@ -12,7 +12,7 @@ const v = (req, res, next) => {
     else {
       JWT.verify(token, process.env.JWT_SECRET, (err, dec) => {
         if (dec) {
-          User.findOne({ where: { id: dec.id }})
+          Users.findOne({ where: { id: dec.id }})
             .then(user => {
               req.user = user;
               next();
@@ -20,7 +20,11 @@ const v = (req, res, next) => {
               res.status(401).json({message: "database error"});
             });
         } else {
-          res.status(400).json({message: "not authorized"});
+          res.status(400).json({
+            message: "not authorized",
+            token,
+            jwts: process.env.JWT_SECRET
+          });
         }
       })
     }
