@@ -9,7 +9,7 @@ const userC = require('./controllers/userC');
 const userinfoC = require('./controllers/userinfoC');
 const drinksC = require('./controllers/drinksC');
 const ingredientsC = require('./controllers/ingredientsC');
-const postsC = require('./postsC');
+const postsC = require('./controllers/postsC');
 
 let seq = require('./db');
 seq.sync();
