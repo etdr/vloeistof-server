@@ -21,9 +21,7 @@ const v = (req, res, next) => {
             });
         } else {
           res.status(400).json({
-            message: "not authorized",
-            token,
-            jwts: process.env.JWT_SECRET
+            message: "not authorized"
           });
         }
       })

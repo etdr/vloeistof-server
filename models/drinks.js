@@ -6,7 +6,7 @@ module.exports = (seq, DT) => {
   Drinks.init({
     name: { type: DT.STRING },
     ingredients: { type: DT.JSON },
-    directions: { type: DT.TEXT },
+    instructions: { type: DT.TEXT },
     
 
   }, {
