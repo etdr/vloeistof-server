@@ -47,7 +47,19 @@ router.get('/:id', async (req, res) => {
 
 // post new drink
 router.post('/new', async (req, res) => {
+  try {
+    const d = req.body.drink;
 
+    const reply = await Drinks.create({
+      name: d.name,
+      ingredients: d.ingredients,
+      instructions: d.instructions
+    });
+
+    res.send(reply);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
 });
 
 
