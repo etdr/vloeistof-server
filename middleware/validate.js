@@ -14,8 +14,12 @@ const v = (req, res, next) => {
         if (dec) {
           Users.findOne({ where: { id: dec.id }})
             .then(user => {
-              req.user = user;
-              next();
+              if (user==null) {
+                res.status(400).json({message: "no user found"})
+              } else {
+                req.user = user;
+                next();
+              }
             }, () => {
               res.status(401).json({message: "database error"});
             });
