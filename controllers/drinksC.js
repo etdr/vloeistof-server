@@ -53,7 +53,9 @@ router.post('/new', async (req, res) => {
     const reply = await Drinks.create({
       name: d.name,
       ingredients: d.ingredients,
-      instructions: d.instructions
+      instructions: d.instructions,
+      cDBId: d.cDBId,
+      userId: req.user.id
     });
 
     res.send(reply);
