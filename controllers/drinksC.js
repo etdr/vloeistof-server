@@ -73,7 +73,14 @@ router.put('/:id', async (req, res) => {
 
 // delete drink
 router.delete('/:id', async (req, res) => {
-
+  try { 
+    const data = await Drinks.destroy({
+      where: { id: id, userId: userId}
+    })
+    res.status(200).json({message: data})
+  }catch(error){
+    res.status(500).send(error.message);
+  }
 });
 
 
