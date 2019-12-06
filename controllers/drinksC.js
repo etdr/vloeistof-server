@@ -55,7 +55,8 @@ router.post('/new', async (req, res) => {
       ingredients: d.ingredients,
       instructions: d.instructions,
       cDBId: d.cDBId,
-      userId: req.user.id
+      userId: req.user.id,
+      thumbUrl: d.thumbUrl
     });
 
     res.send(reply);
@@ -67,7 +68,38 @@ router.post('/new', async (req, res) => {
 
 // modify drink
 router.put('/:id', async (req, res) => {
+  try {
+    const d = req.body.drink;
+    const id = req.params.id;
+    const userId = req.user.id;
 
+    let name = d.name;
+    let ingredients = d.ingredients;
+    let instructions = d.instructions;
+    let thumbUrl = d.thumbUrl;
+    let cDBId = d.cDBId;
+
+    let d0 = await Drinks.findOne({ id, userId });
+
+    if (!name) name = d0.name;
+    if (!ingredients) ingredients = d0.ingredients;
+    if (!instructions) instructions = d0.instructions;
+    if (!thumbUrl) thumbUrl = d0.thumbUrl;
+    if (!cDBId) cDBId = d0.cDBId;
+
+    let response = Drinks.update({
+      name,
+      ingredients,
+      instructions,
+      thumbUrl,
+      cDBId
+    }, {where: {id, userId}});
+
+    res.json(response)
+
+  } catch (err) {
+    res.status(500).json({message: err.message});
+  }
 });
 
 
