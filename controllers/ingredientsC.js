@@ -52,7 +52,29 @@ router.post('/new', async (req, res) => {
 
 // modify ingredient
 router.put('/:id', async (req, res) => {
+  try {
+    const i = req.body.ingredient;
+    const id = req.params.id;
+    const userId = req.user.id;
 
+    let name = i.name;
+    let comments = i.comments;
+
+    let i0 = await Ingredients.findOne({ id, userId });
+
+    if (!name) name = i0.name;
+    if (!comments) comments = i0.comments;
+
+    let response = Ingredients.update({
+      name,
+      comments
+    }, {where: {id, userId}});
+
+    res.json(response)
+
+  } catch (err) {
+    res.status(500).json({message: err.message});
+  }
 });
 
 
