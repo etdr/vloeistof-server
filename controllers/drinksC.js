@@ -37,7 +37,7 @@ router.get('/user/:id', async (req, res) => {
 router.get('/user/:id/created', async (req, res) => {
   try {
     const data = await Drinks.findAll(
-      {where: { cDBId: 0 }}
+      {where: { cDBId: 0, userId: req.params.id }}
     );
 
     res.send(data);
@@ -50,7 +50,7 @@ router.get('/user/:id/created', async (req, res) => {
 router.get('/user/:id/api', async (req, res) => {
   try {
     const data = await Drinks.findAll(
-      {where: { cDBId: { [Op.ne]: 0 } }}
+      {where: { cDBId: { [Op.ne]: 0 }, userId: req.params.id }}
     );
 
     res.send(data);
@@ -63,7 +63,7 @@ router.get('/user/:id/api', async (req, res) => {
 router.get('/user/:id/favorite', async (req, res) => {
   try {
     const data = await Drinks.findAll(
-      {where: { favorite: true }}
+      {where: { favorite: true, userId: req.params.id }}
     );
 
     res.send(data);
