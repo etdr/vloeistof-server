@@ -34,7 +34,7 @@ router.get('/user/:id', async (req, res) => {
 });
 
 
-router.get('/created/:id', async (req, res) => {
+router.get('/user/:id/created', async (req, res) => {
   try {
     const data = await Drinks.findAll(
       {where: { cDBId: 0 }}
@@ -47,7 +47,7 @@ router.get('/created/:id', async (req, res) => {
   }
 });
 
-router.get('/api/:id', async (req, res) => {
+router.get('/user/:id/api', async (req, res) => {
   try {
     const data = await Drinks.findAll(
       {where: { cDBId: { [Op.ne]: 0 } }}
@@ -60,7 +60,7 @@ router.get('/api/:id', async (req, res) => {
   }
 });
 
-router.get('/favorite/:id', async (req, res) => {
+router.get('/user/:id/favorite', async (req, res) => {
   try {
     const data = await Drinks.findAll(
       {where: { favorite: true }}
