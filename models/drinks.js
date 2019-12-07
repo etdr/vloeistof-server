@@ -7,8 +7,9 @@ module.exports = (seq, DT) => {
     name: { type: DT.STRING },
     ingredients: { type: DT.JSON },
     instructions: { type: DT.TEXT },
+    favorite: { type: DT.BOOLEAN },
     thumbUrl: { type: DT.STRING },
-    cDBId: { type: DT.INTEGER }
+    cDBId: { type: DT.INTEGER },
     
   }, {
     sequelize: seq,
