@@ -81,7 +81,14 @@ router.put('/:id', async (req, res) => {
 
 // delete ingredient
 router.delete('/:id', async (req, res) => {
-  
+  try {
+    const data = await Ingredients.destroy({
+      where: { id: id, userId}
+    })
+    res.status(200).json({message: data})
+  }catch(error){
+    res.status(500).send(error.message);
+  }
 });
 
 
