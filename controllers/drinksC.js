@@ -1,5 +1,7 @@
 const router = require('express').Router();
 
+const Op = require('sequelize').Op;
+
 let Drinks = require('../db').import('../models/drinks');
 
 
@@ -16,6 +18,8 @@ router.get('/', async (req, res) => {
 });
 
 
+
+
 // get all drinks by a specific user
 router.get('/user/:id', async (req, res) => {
   try {
@@ -24,6 +28,46 @@ router.get('/user/:id', async (req, res) => {
     });
 
     res.send(data);
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+
+router.get('/created/:id', async (req, res) => {
+  try {
+    const data = await Drinks.findAll(
+      {where: { cDBId: 0 }}
+    );
+
+    res.send(data);
+
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.get('/api/:id', async (req, res) => {
+  try {
+    const data = await Drinks.findAll(
+      {where: { cDBId: { [Op.ne]: 0 } }}
+    );
+
+    res.send(data);
+
+  } catch (err) {
+    res.status(500).send(err.message);
+  }
+});
+
+router.get('/favorite/:id', async (req, res) => {
+  try {
+    const data = await Drinks.findAll(
+      {where: { favorite: true }}
+    );
+
+    res.send(data);
+
   } catch (err) {
     res.status(500).send(err.message);
   }
