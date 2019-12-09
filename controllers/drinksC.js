@@ -154,7 +154,7 @@ router.put('/:id', async (req, res) => {
 router.delete('/:id', async (req, res) => {
   try { 
     const data = await Drinks.destroy({
-      where: { id: id, userId: userId}
+      where: { id: req.params.id, userId: req.user.id}
     })
     res.status(200).json({message: data})
   }catch(error){
