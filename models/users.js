@@ -17,6 +17,9 @@ module.exports = (seq, DT) => {
     },
     password: {
       type: DT.STRING
+    },
+    admin: {
+      type: DT.BOOLEAN
     }
   }, {
     sequelize: seq,
