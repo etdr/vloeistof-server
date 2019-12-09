@@ -3,7 +3,7 @@ const router = require('express').Router();
 const Op = require('sequelize').Op;
 
 let Drinks = require('../db').import('../models/drinks');
-
+let Users = require('../db').import('../models/users');
 
 // get all drinks
 router.get('/', async (req, res) => {
@@ -114,6 +114,7 @@ router.post('/new', async (req, res) => {
 // modify drink
 router.put('/:id', async (req, res) => {
   try {
+
     const d = req.body.drink;
     const id = req.params.id;
     const userId = req.user.id;
@@ -125,7 +126,11 @@ router.put('/:id', async (req, res) => {
     let favorite = d.favorite;
     let cDBId = d.cDBId;
 
-    let d0 = await Drinks.findOne({ id, userId });
+    let u = await Users.findOne({ where: { id: userId } });
+    let d0;
+
+    if (u.admin) d0 = await Drinks.findOne({ where: { id } });
+    else let d0 = await Drinks.findOne({ where: { id, userId } });
 
     if (!name) name = d0.name;
     if (!ingredients) ingredients = d0.ingredients;
@@ -141,7 +146,7 @@ router.put('/:id', async (req, res) => {
       thumbUrl,
       favorite,
       cDBId
-    }, {where: {id, userId}});
+    }, {where: u.admin ? {id} : {id, userId}});
 
     res.json(response)
 
@@ -154,9 +159,17 @@ router.put('/:id', async (req, res) => {
 // delete drink
 router.delete('/:id', async (req, res) => {
   try { 
-    const data = await Drinks.destroy({
-      where: { id: req.params.id, userId: req.user.id}
-    })
+    let u = await Users.findOne({ where: { id: userId } });
+    let data;
+    if (u.admin) {
+      data = await Drinks.destroy({
+        where: { id: req.params.id }
+      });
+    } else {
+      data = await Drinks.destroy({
+        where: { id: req.params.id, userId: req.user.id}
+      });
+    }
     res.status(200).json({message: data})
   }catch(error){
     res.status(500).send(error.message);
