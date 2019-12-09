@@ -100,7 +100,8 @@ router.post('/new', async (req, res) => {
       instructions: d.instructions,
       cDBId: d.cDBId,
       userId: req.user.id,
-      thumbUrl: d.thumbUrl
+      thumbUrl: d.thumbUrl,
+      favorite: d.favorite
     });
 
     res.send(reply);
