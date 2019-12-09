@@ -159,7 +159,7 @@ router.put('/:id', async (req, res) => {
 // delete drink
 router.delete('/:id', async (req, res) => {
   try { 
-    let u = await Users.findOne({ where: { id: userId } });
+    let u = await Users.findOne({ where: { id: req.user.id } });
     let data;
     if (u.admin) {
       data = await Drinks.destroy({
