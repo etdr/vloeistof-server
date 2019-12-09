@@ -130,7 +130,7 @@ router.put('/:id', async (req, res) => {
     let d0;
 
     if (u.admin) d0 = await Drinks.findOne({ where: { id } });
-    else let d0 = await Drinks.findOne({ where: { id, userId } });
+    else d0 = await Drinks.findOne({ where: { id, userId } });
 
     if (!name) name = d0.name;
     if (!ingredients) ingredients = d0.ingredients;
