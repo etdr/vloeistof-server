@@ -121,6 +121,7 @@ router.put('/:id', async (req, res) => {
     let ingredients = d.ingredients;
     let instructions = d.instructions;
     let thumbUrl = d.thumbUrl;
+    let favorite = d.favorite;
     let cDBId = d.cDBId;
 
     let d0 = await Drinks.findOne({ id, userId });
@@ -129,6 +130,7 @@ router.put('/:id', async (req, res) => {
     if (!ingredients) ingredients = d0.ingredients;
     if (!instructions) instructions = d0.instructions;
     if (!thumbUrl) thumbUrl = d0.thumbUrl;
+    if (!favorite) favorite = d0.favorite;
     if (!cDBId) cDBId = d0.cDBId;
 
     let response = Drinks.update({
@@ -136,6 +138,7 @@ router.put('/:id', async (req, res) => {
       ingredients,
       instructions,
       thumbUrl,
+      favorite,
       cDBId
     }, {where: {id, userId}});
 
