@@ -10,6 +10,7 @@ const userinfoC = require('./controllers/userinfoC');
 const drinksC = require('./controllers/drinksC');
 const ingredientsC = require('./controllers/ingredientsC');
 const postsC = require('./controllers/postsC');
+const adminC = require('./controllers/adminC');
 
 let seq = require('./db');
 seq.sync();
@@ -25,6 +26,7 @@ app.use('/api/userinfo', userinfoC)
 app.use('/api/drinks', drinksC);
 app.use('/api/ing', ingredientsC);
 app.use('/api/posts', postsC);
+app.use('/api/admin', adminC);
 
 app.listen(process.env.PORT,
   () => console.log('listening on specified port'));

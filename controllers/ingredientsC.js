@@ -1,6 +1,7 @@
 const router = require('express').Router();
 
-const Ingredients = require('../db').import('../models/drinks');
+const Ingredients = require('../db').import('../models/ingredients');
+const Users = require('../db').import('../models/users');
 
 
 // get all ingredients
@@ -60,7 +61,11 @@ router.put('/:id', async (req, res) => {
     let name = i.name;
     let comments = i.comments;
 
-    let i0 = await Ingredients.findOne({ id, userId });
+    let u = await Users.findOne({ where: { id: userId } });
+    let i0;
+
+    if (u.admin) i0 = await Drinks.findOne({ where: { id } });
+    else i0 = await Drinks.findOne({ where: { id, userId } });
 
     if (!name) name = i0.name;
     if (!comments) comments = i0.comments;
@@ -68,7 +73,7 @@ router.put('/:id', async (req, res) => {
     let response = Ingredients.update({
       name,
       comments
-    }, {where: {id, userId}});
+    }, {where: u.admin ? {id} : {id, userId}});
 
     res.json(response)
 
@@ -82,9 +87,17 @@ router.put('/:id', async (req, res) => {
 // delete ingredient
 router.delete('/:id', async (req, res) => {
   try {
-    const data = await Ingredients.destroy({
-      where: { id: req.params.id, userId: req.user.id }
-    })
+    let u = await Users.findOne({ where: { id: req.user.id } });
+    let data;
+    if (u.admin) {
+      data = await Ingredients.destroy({
+        where: { id: req.params.id }
+      });
+    } else {
+      data = await Ingredients.destroy({
+        where: { id: req.params.id, userId: req.user.id}
+      });
+    }
     res.status(200).json({message: data})
   }catch(error){
     res.status(500).send(error.message);
