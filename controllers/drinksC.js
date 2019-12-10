@@ -139,7 +139,7 @@ router.put('/:id', async (req, res) => {
     if (!favorite) favorite = d0.favorite;
     if (!cDBId) cDBId = d0.cDBId;
 
-    let response = Drinks.update({
+    let response = await Drinks.update({
       name,
       ingredients,
       instructions,

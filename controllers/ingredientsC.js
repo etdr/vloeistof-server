@@ -70,7 +70,7 @@ router.put('/:id', async (req, res) => {
     if (!name) name = i0.name;
     if (!comments) comments = i0.comments;
 
-    let response = Ingredients.update({
+    let response = await Ingredients.update({
       name,
       comments
     }, {where: u.admin ? {id} : {id, userId}});
