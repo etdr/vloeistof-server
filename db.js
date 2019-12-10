@@ -29,6 +29,9 @@ Ingredients.belongsTo(Users);
 Users.hasMany(Posts);
 Posts.belongsTo(Users);
 
+Drinks.hasMany(Posts);
+Posts.belongsTo(Drinks);
+
 
 
 module.exports = seq;
