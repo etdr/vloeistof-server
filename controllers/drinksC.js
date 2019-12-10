@@ -136,7 +136,7 @@ router.put('/:id', async (req, res) => {
     if (!ingredients) ingredients = d0.ingredients;
     if (!instructions) instructions = d0.instructions;
     if (!thumbUrl) thumbUrl = d0.thumbUrl;
-    if (!favorite) favorite = d0.favorite;
+    //if (!favorite) favorite = d0.favorite;
     if (!cDBId) cDBId = d0.cDBId;
 
     let response = await Drinks.update({
