@@ -40,7 +40,8 @@ router.post('/new', async (req, res) => {
 
     const reply = await Ingredients.create({
       name: d.name,
-      comments: d.comments
+      comments: d.comments,
+      userId: req.user.id
     });
 
     res.send(reply);
