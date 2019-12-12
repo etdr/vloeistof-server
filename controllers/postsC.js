@@ -25,7 +25,7 @@ router.post('/:id', async (req, res) => {
   try {
     const p = req.body.post;
 
-    const reply = Posts.create({
+    const reply = await Posts.create({
       userId: req.user.id,
       drinkId: req.params.id,
       title: p.title,
