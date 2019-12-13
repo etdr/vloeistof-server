@@ -5,6 +5,22 @@ const BC = require('bcryptjs');
 let Users = require('../db').import('../models/users');
 
 
+router.get('/:id', async (req, res) => {
+  try {
+
+    const u = await Users.findOne({where: {id: req.params.id}});
+
+    res.json({
+      username: u.username
+    })
+
+  } catch (err) {
+    res.status(500).json({message:err.message});
+  }
+});
+
+
+
 // POST /signup
 router.post('/signup', async (req, res) => {
   try {
