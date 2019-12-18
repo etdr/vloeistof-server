@@ -8,7 +8,11 @@ let Users = require('../db').import('../models/users');
 // get all drinks
 router.get('/', async (req, res) => {
   try {
-    const data = await Drinks.findAll();
+
+    const data = await Drinks.findAll({
+      limit: req.query.pageSize,
+      offset: req.query.page * req.query.pageSize
+    });
 
     res.send(data);
 
@@ -24,7 +28,9 @@ router.get('/', async (req, res) => {
 router.get('/user/:id', async (req, res) => {
   try {
     const data = await Drinks.findAll({
-      where: { userId: req.params.id }
+      where: { userId: req.params.id },
+      limit: req.query.pageSize,
+      offset: req.query.page * req.query.pageSize
     });
 
     res.send(data);
@@ -36,9 +42,11 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/user/:id/created', async (req, res) => {
   try {
-    const data = await Drinks.findAll(
-      {where: { cDBId: 0, userId: req.params.id }}
-    );
+    const data = await Drinks.findAll({
+      where: { cDBId: 0, userId: req.params.id },
+      limit: req.query.pageSize,
+      offset: req.query.page * req.query.pageSize
+    });
 
     res.send(data);
 
@@ -49,9 +57,11 @@ router.get('/user/:id/created', async (req, res) => {
 
 router.get('/user/:id/api', async (req, res) => {
   try {
-    const data = await Drinks.findAll(
-      {where: { cDBId: { [Op.ne]: 0 }, userId: req.params.id }}
-    );
+    const data = await Drinks.findAll({
+      where: { cDBId: { [Op.ne]: 0 }, userId: req.params.id },
+      limit: req.query.pageSize,
+      offset: req.query.page * req.query.pageSize
+    });
 
     res.send(data);
 
@@ -62,9 +72,11 @@ router.get('/user/:id/api', async (req, res) => {
 
 router.get('/user/:id/favorite', async (req, res) => {
   try {
-    const data = await Drinks.findAll(
-      {where: { favorite: true, userId: req.params.id }}
-    );
+    const data = await Drinks.findAll({
+      where: { favorite: true, userId: req.params.id },
+      limit: req.query.pageSize,
+      offset: req.query.page * req.query.pageSize
+    });
 
     res.send(data);
 
