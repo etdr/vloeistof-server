@@ -59,8 +59,12 @@ router.delete('/cascade/:id', async (req, res) => {
       const resultDrinks = await Drinks.destroy({where: {userId: req.params.id}});
       const resultPosts = await Posts.destroy({where: {userId: req.params.id}});
       const resultIngs = await Ingredients.destroy({where: {userId: req.params.id}});
+<<<<<<< HEAD
       const result = await Users.destroy({where: {id: req.params.id}});
       res.json({result, resultDrinks, resultPosts, resultIngs});
+=======
+      res.json({result});
+>>>>>>> 16b84191d9a594a9190372f57c1064a7e203a025
     } else {
       res.json({message: "not an admin"});
     }
