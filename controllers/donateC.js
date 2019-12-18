@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 
-const stripe = require('stripe')('sk_test_qXkk2PngAuqzT3zpGEJxgQ8k00bzHEVimA');
+const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST);
 
 
 router.post('/', async (req, res) => {
