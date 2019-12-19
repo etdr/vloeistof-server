@@ -9,9 +9,12 @@ let Users = require('../db').import('../models/users');
 router.get('/', async (req, res) => {
   try {
 
+    const p = req.query.page ? req.query.page : 0;
+    const pS = req.query.pageSize ? req.query.pageSize : 1000;
+
     const data = await Drinks.findAll({
-      limit: req.query.pageSize,
-      offset: req.query.page * req.query.pageSize
+      limit: p,
+      offset: pS
     });
 
     res.send(data);
@@ -27,10 +30,13 @@ router.get('/', async (req, res) => {
 // get all drinks by a specific user
 router.get('/user/:id', async (req, res) => {
   try {
+    const p = req.query.page ? req.query.page : 0;
+    const pS = req.query.pageSize ? req.query.pageSize : 1000;
+
     const data = await Drinks.findAll({
       where: { userId: req.params.id },
-      limit: req.query.pageSize,
-      offset: req.query.page * req.query.pageSize
+      limit: p,
+      offset: pS
     });
 
     res.send(data);
@@ -42,10 +48,13 @@ router.get('/user/:id', async (req, res) => {
 
 router.get('/user/:id/created', async (req, res) => {
   try {
+    const p = req.query.page ? req.query.page : 0;
+    const pS = req.query.pageSize ? req.query.pageSize : 1000;
+
     const data = await Drinks.findAll({
       where: { cDBId: 0, userId: req.params.id },
-      limit: req.query.pageSize,
-      offset: req.query.page * req.query.pageSize
+      limit: p,
+      offset: pS
     });
 
     res.send(data);
@@ -57,10 +66,13 @@ router.get('/user/:id/created', async (req, res) => {
 
 router.get('/user/:id/api', async (req, res) => {
   try {
+    const p = req.query.page ? req.query.page : 0;
+    const pS = req.query.pageSize ? req.query.pageSize : 1000;
+
     const data = await Drinks.findAll({
       where: { cDBId: { [Op.ne]: 0 }, userId: req.params.id },
-      limit: req.query.pageSize,
-      offset: req.query.page * req.query.pageSize
+      limit: p,
+      offset: pS
     });
 
     res.send(data);
@@ -72,10 +84,13 @@ router.get('/user/:id/api', async (req, res) => {
 
 router.get('/user/:id/favorite', async (req, res) => {
   try {
+    const p = req.query.page ? req.query.page : 0;
+    const pS = req.query.pageSize ? req.query.pageSize : 1000;
+
     const data = await Drinks.findAll({
       where: { favorite: true, userId: req.params.id },
-      limit: req.query.pageSize,
-      offset: req.query.page * req.query.pageSize
+      limit: p,
+      offset: pS
     });
 
     res.send(data);
